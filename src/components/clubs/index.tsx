@@ -47,8 +47,8 @@ export default function Clubs() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small">View</Button>
-                      <Button size="small">Edit</Button>
+                      <Button size="small" variant='contained' color='success' >View</Button>
+                      <Button size="small" variant='contained' color='info'>Edit</Button>
                     </CardActions>
                   </Card>
                 </Grid>
