@@ -24,12 +24,13 @@ export default function Clubs() {
                   >
                     <CardMedia
                       component="img"
+                      height='330'
                       sx={{
                         // 16:9
                         pt: '56.25%',
                       }}
                       image={club.image}
-                      alt="random"
+                      alt={club.name}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
