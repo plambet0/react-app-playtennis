@@ -1,6 +1,8 @@
-import { AppbarContainer, AppBarHeader, MyList } from "../../styles/appbar";
+
 import { ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
+import Actions from "./actions";
+import { MyList, AppbarContainer, AppBarHeader} from "../../styles/appbar";
 
 type IProps = {
     matches: boolean;
@@ -23,6 +25,7 @@ export default function AppbarDesktop({matches} : IProps) {
                     <SearchIcon />
                 </ListItemIcon>
              </ListItemButton>
+             <Actions matches={matches}/>
         </MyList>
       </AppbarContainer>
     );
