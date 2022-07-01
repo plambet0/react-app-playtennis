@@ -5,6 +5,9 @@ import Actions from "./actions";
 import { MyList, AppbarContainer, AppBarHeader} from "../../styles/appbar";
 import { useState } from 'react';
 import ClubForm from '../clubForm';
+import Clubs from '../clubs';
+import App from '../../App';
+import { Banner } from './banner';
 
 type IProps = {
     matches: boolean;
@@ -12,19 +15,25 @@ type IProps = {
 
 export default function AppbarDesktop({matches} : IProps) {
   const [loadClubForm, setloadClubForm] = useState(false);
+  const [loadClubs, setloadClubs] = useState(false);
+
+  const handleLoadClubs = () => {
+    setloadClubs(true);
+  }
 
   const handleLoadClubForm = () => {
-    setloadClubForm(true);
+    setloadClubForm(!loadClubForm);
   }
 
     return (
+      <>
       <AppbarContainer>
         <AppBarHeader>Play Tennis</AppBarHeader>
         <MyList type={"row"}>
              <Divider orientation="vertical" flexItem />
              <ListItemButton>Home</ListItemButton>
              <Divider orientation="vertical" flexItem />
-             <ListItemButton>Clubs</ListItemButton>
+             <ListItemButton onClick={handleLoadClubs}>Clubs</ListItemButton>
              <Divider orientation="vertical" flexItem />
              <ListItemButton>Players</ListItemButton>
              <Divider orientation="vertical" flexItem />
@@ -45,6 +54,9 @@ export default function AppbarDesktop({matches} : IProps) {
         </MyList>
         {loadClubForm && <ClubForm handleClose={() => {setloadClubForm(false)}}/>}
       </AppbarContainer>
+      <Banner/>
+      {loadClubs && <Clubs/>}
+      </>
     );
 
 }

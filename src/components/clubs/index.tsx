@@ -35,7 +35,6 @@ export type IClub = {
 
 
 
-
 export default function Clubs() {
     const [clubs, setClubs] = useState<IClub[]>(clubsData);
     const [clubInfo, setclubInfo] = useState<IClub>();

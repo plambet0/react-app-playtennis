@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import theme from './styles/theme';
 import Appbar from './components/appbar';
 import { Banner } from './components/appbar/banner'
-import Clubs from './components/clubs';
 
 
 function App() {
@@ -21,8 +20,6 @@ function App() {
       }}
     >
       <Appbar />
-      <Banner />
-      <Clubs/>
       {
         /*
         Promotions
