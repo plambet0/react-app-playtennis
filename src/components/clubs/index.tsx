@@ -9,15 +9,55 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../styles/theme';
+import { useState } from 'react';
+import ClubForm from '../clubForm';
+
+
+export type IClub = {
+    id: number;
+    name: string;
+    city: string;
+    pricePerHour: number;
+    numberOfCourts: number;
+    surface: string;
+    image: string;
+};
+
+// const defaultIClubObj = {
+//     id : null,
+//     name : null,
+//     city : null,
+//     pricePerHour : null,
+//     numberOfCourts : null,
+//     surface : null,
+//     image : null,
+// };
+
+
 
 
 export default function Clubs() {
-
-        return(
+    const [clubs, setClubs] = useState<IClub[]>(clubsData);
+    const [clubInfo, setclubInfo] = useState<IClub>();
+    const [openForm, setOpenForm] = useState(false);
+    
+   
+    const handleEdit = (club : IClub) => {
+        setclubInfo(club);
+        setOpenForm(true);
+    }
+   
+    
+    const  handleDelete = (id: number) => {
+        setClubs(clubs.filter((club) => club.id !== id))
+    };
+        
+    
+    return(
             <Container sx={{ py: 8 }} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={16} columns={8}>
-              {clubsData.map((club) => (
+              {clubs.map((club) => (
                 <Grid item key={club.id} xs={12} sm={6} md={4}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', background: Colors.light_gray }}
@@ -45,15 +85,20 @@ export default function Clubs() {
                       <Typography>
                         Number of courts: {club.numberOfCourts}
                       </Typography>
+                      <Typography>
+                        Surface: {club.surface}
+                      </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" variant='contained' color='success' >View</Button>
-                      <Button size="small" variant='contained' color='info'>Edit</Button>
+                      <Button onClick={() => handleDelete(club.id)} size="small" variant='contained' color='success' >Delete</Button>
+                      <Button onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
                     </CardActions>
                   </Card>
                 </Grid>
               ))}
             </Grid>
+            {openForm && <ClubForm handleClose={() => setOpenForm(false)} clubInput={clubInfo}/>}
           </Container>
+          
     )
 }
