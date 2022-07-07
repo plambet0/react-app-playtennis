@@ -14,13 +14,13 @@ import ClubForm from '../clubForm';
 
 
 export type IClub = {
-    id: number;
-    name: string;
+    id: string ;
+    name: string ;
     city: string;
     pricePerHour: number;
     numberOfCourts: number;
     surface: string;
-    image: string;
+    image?: string;
 };
 
 // const defaultIClubObj = {
@@ -47,7 +47,7 @@ export default function Clubs() {
     }
    
     
-    const  handleDelete = (id: number) => {
+    const  handleDelete = (id: string) => {
         setClubs(clubs.filter((club) => club.id !== id))
     };
         

@@ -1,6 +1,8 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IClub } from '../clubs';
+import { clubsData } from '../../data';
+import { v4 as uuid } from 'uuid';
 
 type IProps = {
     handleClose: () => void;
@@ -35,18 +37,41 @@ const errorTexts = {
 
 
 export default function ClubForm({handleClose, clubInput} : IProps) {
-    const [name, setName] = useState(clubInput?.name || null);
-    const [city, setCity] = useState(clubInput?.city || null);
-    const [pricePerHour, setpricePerHour] = useState(clubInput?.pricePerHour || null);
-    const [numberOfCourts, setNumberOfCourts] = useState(clubInput?.numberOfCourts || null);
-    const [surface, setSurface] = useState(clubInput?.surface || null);
+    const [name, setName] = useState(clubInput?.name || '');
+    const [city, setCity] = useState(clubInput?.city || '');
+    const [pricePerHour, setpricePerHour] = useState(clubInput?.pricePerHour || 0);
+    const [numberOfCourts, setNumberOfCourts] = useState(clubInput?.numberOfCourts || 0);
+    const [surface, setSurface] = useState(clubInput?.surface || '');
+    const [image, setImage] = useState(clubInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
+    const [clubs, setClubs] = useState<IClub[]>(clubsData);
+
+    useEffect(() => {
+      setClubs(clubs)
+    }, [clubs]);
+    
+    const handleSubmit = (e:React.FormEvent) => {
+      e.preventDefault();
+      
+      const club = {
+        id: uuid(),
+        name: name,
+        city: city,
+        pricePerHour: pricePerHour,
+        numberOfCourts: numberOfCourts,
+        surface: surface,
+        image: image
+      };
+      clubs.push(club);
+      setClubs(clubs);
+      handleClose();
+    }
 
     
 
     return(
     <Dialog 
-    id="new-company-dialog" 
+    id="new-club-dialog" 
     open={true} 
     // classes={{ paper: classes.paperNew }}
     BackdropProps={{ style: { background: '#1297FCC 0% 0% no-repeat padding-box' } }}
@@ -72,7 +97,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
             width: '100%'
           }}
         >
-          Create company
+          {!clubInput ? 'Add Club' : 'Edit Club'}
         </span>
       </DialogTitle>
       <DialogContent style={{ padding: 0}}>
@@ -82,11 +107,10 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               fullWidth
               required
               id="name"
-              data-testid="name"
               label="Club Name (full)"
               name="name"
-            //   error={formErrors.companyName !== null}
-            //   helperText={formErrors.companyName ? formErrors.companyName : ''}
+              error={formErrors.name !== null}
+              helperText={formErrors.name ? formErrors.name : ''}
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -95,8 +119,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                 style: { color: formErrors.name !== null ? 'red' : '#12497F' }
               }}
               inputProps={{
-                style: { color: '#12497F' },
-                'data-testid': 'name-input-field'
+                style: { color: '#12497F' }
               }}
             />
             </Grid>
@@ -105,11 +128,10 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               fullWidth
               required
               id="city"
-              data-testid="city"
               label="City (full)"
               name="city"
-            //   error={formErrors.companyName !== null}
-            //   helperText={formErrors.companyName ? formErrors.companyName : ''}
+              error={formErrors.city !== null}
+              helperText={formErrors.city ? formErrors.city : ''}
               value={city}
               onChange={(e) => {
                 setCity(e.target.value);
@@ -118,10 +140,93 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                 style: { color: formErrors.city !== null ? 'red' : '#12497F' }
               }}
               inputProps={{
-                style: { color: '#12497F' },
-                'data-testid': 'city-input-field'
+                style: { color: '#12497F' }
               }}
             />
+            <Grid item xs={9}>
+            <TextField
+              fullWidth
+              required
+              id="price"
+              label="Price per hour"
+              name="name"
+              error={formErrors.pricePerHour !== null}
+              helperText={formErrors.pricePerHour ? formErrors.pricePerHour : ''}
+              value={pricePerHour}
+              onChange={(e) => {
+                setpricePerHour(+e.target.value);
+              }}
+              InputLabelProps={{
+                style: { color: formErrors.pricePerHour !== null ? 'red' : '#12497F' }
+              }}
+              inputProps={{
+                style: { color: '#12497F' }
+              }}
+            />
+            </Grid>
+            <Grid item xs={9}>
+            <TextField
+              fullWidth
+              required
+              id="number-of-courts"
+              label="Number of courts"
+              name="numberOfCourts"
+              error={formErrors.numberOfScourts !== null}
+              helperText={formErrors.numberOfScourts ? formErrors.numberOfScourts : ''}
+              value={numberOfCourts}
+              onChange={(e) => {
+                setNumberOfCourts(+e.target.value);
+              }}
+              InputLabelProps={{
+                style: { color: formErrors.numberOfScourts !== null ? 'red' : '#12497F' }
+              }}
+              inputProps={{
+                style: { color: '#12497F' }
+              }}
+            />
+            </Grid>
+            <Grid item xs={9}>
+            <TextField
+              fullWidth
+              required
+              id="surface"
+              label="Surface"
+              name="surface"
+              error={formErrors.surface !== null}
+              helperText={formErrors.surface ? formErrors.surface : ''}
+              value={surface}
+              onChange={(e) => {
+                setSurface(e.target.value);
+              }}
+              InputLabelProps={{
+                style: { color: formErrors.surface !== null ? 'red' : '#12497F' }
+              }}
+              inputProps={{
+                style: { color: '#12497F' }
+              }}
+            />
+            </Grid>
+            <Grid item xs={9}>
+            <TextField
+              fullWidth
+              required
+              id="image"
+              label="Image"
+              name="image"
+              error={formErrors.image !== null}
+              helperText={formErrors.image ? formErrors.image : ''}
+              value={image}
+              onChange={(e) => {
+                setImage(e.target.value);
+              }}
+              InputLabelProps={{
+                style: { color: formErrors.image !== null ? 'red' : '#12497F' }
+              }}
+              inputProps={{
+                style: { color: '#12497F' }
+              }}
+            />
+            </Grid>
             </Grid>
             <Grid container style={{ marginTop: '115px', marginBottom: '40px' }}>
               <Grid item xs={12} style={{ textAlign: 'center'}}>
@@ -137,7 +242,8 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                   id="create-new-company-button"
                   data-testid="create-new-company-button"
                 //   className={classes.createButton}
-                //   onClick={handleSumbit}
+                  onClick={(e) => {
+                    handleSubmit(e)}}
                 >
                   {!clubInput ? 'CREATE' : 'UPDATE'}
                 </Button>

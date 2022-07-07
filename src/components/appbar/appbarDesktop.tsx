@@ -6,7 +6,6 @@ import { MyList, AppbarContainer, AppBarHeader} from "../../styles/appbar";
 import { useState } from 'react';
 import ClubForm from '../clubForm';
 import Clubs from '../clubs';
-import App from '../../App';
 import { Banner } from './banner';
 
 type IProps = {

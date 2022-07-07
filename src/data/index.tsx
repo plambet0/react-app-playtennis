@@ -1,6 +1,6 @@
 export const clubsData = [
     {
-        id: 1,
+        id: 'sfdsdfds',
         name: "Tennis Club Velto",
         city: "Varna",
         pricePerHour: 22.00,
@@ -9,7 +9,7 @@ export const clubsData = [
         image: "/images/clubs/club2-blue-sky.jpg"
     },
     {
-        id: 2,
+        id: 'sdfdsfdsf',
         name: "Tennis Club Cherno More",
         city: "Varna",
         pricePerHour: 20.00,
@@ -18,7 +18,7 @@ export const clubsData = [
         image: "/images/clubs/dsc7964-319.jpg"
     },
     {
-        id: 3,
+        id: 'sfdsdf',
         name: "Tennis Club Vinitza",
         city: "Varna",
         pricePerHour: 18.00,
@@ -27,7 +27,7 @@ export const clubsData = [
         image: "/images/clubs/tennis-lesson-for-group.jpg"
     },
     {
-        id: 4,
+        id: 'sdfdsfds',
         name: "Tennis Club Sunny Day",
         city: "Varna",
         pricePerHour: 22.00,
