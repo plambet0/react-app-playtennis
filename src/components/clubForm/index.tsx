@@ -46,24 +46,42 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
     const [clubs, setClubs] = useState<IClub[]>(clubsData);
 
-    useEffect(() => {
-      setClubs(clubs)
-    }, [clubs]);
+   
     
     const handleSubmit = (e:React.FormEvent) => {
       e.preventDefault();
+      if (!clubInput) {
+        const club = {
+          id: uuid(),
+          name: name,
+          city: city,
+          pricePerHour: pricePerHour,
+          numberOfCourts: numberOfCourts,
+          surface: surface,
+          image: image
+        };
+        clubs.push(club);
+        setClubs(clubs);
+      }else{
+        const editedClub = clubs.map(club => {
+          if (club.id === clubInput.id) {
+            return {...club, 
+            id: clubInput.id,
+            name: name,
+            city: city,
+            pricePerHour: pricePerHour,
+            numberOfCourts: numberOfCourts,
+            surface: surface,
+            image: image
+            };
+          }
+          return club;
+        });
+    
+        setClubs(editedClub);
+      }
       
-      const club = {
-        id: uuid(),
-        name: name,
-        city: city,
-        pricePerHour: pricePerHour,
-        numberOfCourts: numberOfCourts,
-        surface: surface,
-        image: image
-      };
-      clubs.push(club);
-      setClubs(clubs);
+     
       handleClose();
     }
 
