@@ -1,5 +1,4 @@
 
-import { clubsData } from '../../data';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,6 +10,7 @@ import Container from '@mui/material/Container';
 import { Colors } from '../../styles/theme';
 import { useState } from 'react';
 import ClubForm from '../clubForm';
+import { useClubs } from '../../context';
 
 
 export type IClub = {
@@ -36,7 +36,7 @@ export type IClub = {
 
 
 export default function Clubs() {
-    const [clubs, setClubs] = useState<IClub[]>(clubsData);
+    const {clubs, setClubs} = useClubs();
     const [clubInfo, setclubInfo] = useState<IClub>();
     const [openForm, setOpenForm] = useState(false);
     

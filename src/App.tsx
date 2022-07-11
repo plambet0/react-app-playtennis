@@ -3,8 +3,7 @@ import { Container } from '@mui/system';
 import { useEffect } from 'react';
 import theme from './styles/theme';
 import Appbar from './components/appbar';
-import { Banner } from './components/appbar/banner'
-
+import ClubsProvider from './context';
 
 function App() {
   useEffect(() => {
@@ -20,16 +19,6 @@ function App() {
       }}
     >
       <Appbar />
-      {
-        /*
-        Promotions
-        title
-        Products
-        footer
-        searchbox
-        apprawer
-        */
-      }
     </Container>
     </ThemeProvider>
   );

@@ -1,8 +1,8 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { IClub } from '../clubs';
-import { clubsData } from '../../data';
 import { v4 as uuid } from 'uuid';
+import { useClubs } from '../../context';
 
 type IProps = {
     handleClose: () => void;
@@ -44,7 +44,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [surface, setSurface] = useState(clubInput?.surface || '');
     const [image, setImage] = useState(clubInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
-    const [clubs, setClubs] = useState<IClub[]>(clubsData);
+    const {clubs, setClubs} = useClubs();
 
    
     
