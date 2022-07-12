@@ -36,7 +36,7 @@ export type IClub = {
 
 
 export default function Clubs() {
-    const {clubs, setClubs} = useClubs();
+    const {clubs, setClubs, removeClub} = useClubs();
     const [clubInfo, setclubInfo] = useState<IClub>();
     const [openForm, setOpenForm] = useState(false);
     
@@ -47,8 +47,8 @@ export default function Clubs() {
     }
    
     
-    const  handleDelete = (id: string) => {
-        setClubs(clubs.filter((club) => club.id !== id))
+    const  handleDelete = (club: IClub) => {
+        removeClub(club);
     };
         
     
@@ -89,7 +89,7 @@ export default function Clubs() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button onClick={() => handleDelete(club.id)} size="small" variant='contained' color='success' >Delete</Button>
+                      <Button onClick={() => handleDelete(club)} size="small" variant='contained' color='success' >Delete</Button>
                       <Button onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
                     </CardActions>
                   </Card>

@@ -44,7 +44,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [surface, setSurface] = useState(clubInput?.surface || '');
     const [image, setImage] = useState(clubInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
-    const {clubs, setClubs} = useClubs();
+    const {clubs, setClubs, addClub} = useClubs();
 
    
     
@@ -60,8 +60,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
           surface: surface,
           image: image
         };
-        clubs.push(club);
-        setClubs(clubs);
+        addClub(club);
       }else{
         const editedClub = clubs.map(club => {
           if (club.id === clubInput.id) {
