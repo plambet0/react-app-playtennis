@@ -1,44 +1,49 @@
-import { clubsData } from './data'
+import React, { createContext, useReducer, Dispatch } from 'react';
+import {
+  clubReducer,
+  ActionType
+} from './reducers';
+
 import { IClub } from './components/clubs';
-import React, {useState} from 'react';
+import { clubsData } from './data';
 
 type Props = {
-    children: JSX.Element
-};
-
-type ClubsType = {
-    clubs: IClub[]
-    setClubs: React.Dispatch<React.SetStateAction<IClub[]>>
-    removeClub: (club:IClub) => void;
-    addClub: (club:IClub) => void;
+  children: JSX.Element
 }
 
-const Context = React.createContext<ClubsType>({} as ClubsType);
-
-const ClubsProvider = ( {children } : Props ) => {
-    const [clubs, setClubs] = useState<IClub[]>(clubsData);
-
-    const removeClub = (club: IClub) => {
-        const updatedClubs = clubs.filter(
-          (c) => c.id !== club.id
-        );
-        setClubs(updatedClubs);
-        alert(`Club ${club.name} deleted successfully!`)
-      };
-
-      const addClub = (club: IClub) => {
-        clubs.push(club);
-        setClubs(clubs);
-        alert(`Club ${club.name} added successfully!`)
-      };
-
-    return (
-        <Context.Provider value={{clubs, setClubs, removeClub, addClub}}>
-            {children}
-        </Context.Provider>
-    );
+type InitialStateType = {
+  clubs: IClub[]
 };
 
-export default ClubsProvider;
+export const InitialState = {
+  clubs: clubsData
+};
 
-export const useClubs = () => React.useContext(Context);
+const Context = createContext<{
+  state: InitialStateType;
+  dispatch: Dispatch<ActionType>;
+}>({
+  state: InitialState,
+  dispatch: () => null
+});
+
+const mainReducer = (
+  {
+   clubs
+  }: InitialStateType,
+  action: ActionType
+) => ({
+  clubs: clubReducer(clubs, action),
+});
+
+
+const AppProvider: React.FC<Props> = ({ children } : Props) => {
+  const [state, dispatch] = useReducer(mainReducer, InitialState);
+
+  return <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>;
+};
+
+export {
+  Context,
+  AppProvider
+};

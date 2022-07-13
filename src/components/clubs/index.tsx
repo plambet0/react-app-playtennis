@@ -8,9 +8,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../styles/theme';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ClubForm from '../clubForm';
-import { useClubs } from '../../context';
+import { Context } from '../../context';
+import { Actions } from '../../ActionEnums';
 
 
 export type IClub = {
@@ -23,20 +24,10 @@ export type IClub = {
     image?: string;
 };
 
-// const defaultIClubObj = {
-//     id : null,
-//     name : null,
-//     city : null,
-//     pricePerHour : null,
-//     numberOfCourts : null,
-//     surface : null,
-//     image : null,
-// };
-
 
 
 export default function Clubs() {
-    const {clubs, setClubs, removeClub} = useClubs();
+    const {state, dispatch} = useContext(Context)
     const [clubInfo, setclubInfo] = useState<IClub>();
     const [openForm, setOpenForm] = useState(false);
     
@@ -48,7 +39,7 @@ export default function Clubs() {
    
     
     const  handleDelete = (club: IClub) => {
-        removeClub(club);
+        dispatch({type: Actions.DeleteClub, payload:{id:club.id}})
     };
         
     
@@ -56,7 +47,7 @@ export default function Clubs() {
             <Container sx={{ py: 8 }} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={16} columns={8}>
-              {clubs.map((club) => (
+              {state.clubs.map((club) => (
                 <Grid item key={club.id} xs={12} sm={6} md={4}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', background: Colors.light_gray }}

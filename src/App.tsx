@@ -3,7 +3,6 @@ import { Container } from '@mui/system';
 import { useEffect } from 'react';
 import theme from './styles/theme';
 import Appbar from './components/appbar';
-import ClubsProvider from './context';
 
 function App() {
   useEffect(() => {

@@ -1,8 +1,9 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { IClub } from '../clubs';
 import { v4 as uuid } from 'uuid';
-import { useClubs } from '../../context';
+import { Context } from '../../context';
+import { Actions } from '../../ActionEnums';
 
 type IProps = {
     handleClose: () => void;
@@ -44,43 +45,24 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [surface, setSurface] = useState(clubInput?.surface || '');
     const [image, setImage] = useState(clubInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
-    const {clubs, setClubs, addClub} = useClubs();
+    const {state, dispatch} = useContext(Context);
 
    
     
     const handleSubmit = (e:React.FormEvent) => {
-      e.preventDefault();
+      const club = {
+        name: name,
+        city: city,
+        pricePerHour: pricePerHour,
+        numberOfCourts: numberOfCourts,
+        surface: surface,
+        image: image
+      };
       if (!clubInput) {
-        const club = {
-          id: uuid(),
-          name: name,
-          city: city,
-          pricePerHour: pricePerHour,
-          numberOfCourts: numberOfCourts,
-          surface: surface,
-          image: image
-        };
-        addClub(club);
+        dispatch({type: Actions.AddClub, payload: club})
       }else{
-        const editedClub = clubs.map(club => {
-          if (club.id === clubInput.id) {
-            return {...club, 
-            id: clubInput.id,
-            name: name,
-            city: city,
-            pricePerHour: pricePerHour,
-            numberOfCourts: numberOfCourts,
-            surface: surface,
-            image: image
-            };
-          }
-          return club;
-        });
-    
-        setClubs(editedClub);
+        dispatch({type: Actions.UpdateClub, payload: {id: clubInput.id, ...club}})
       }
-      
-     
       handleClose();
     }
 
