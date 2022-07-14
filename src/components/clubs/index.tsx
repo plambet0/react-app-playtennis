@@ -56,9 +56,9 @@ export default function Clubs() {
     return(
             <Container sx={{ py: 8 }} maxWidth="md">
             {/* End hero unit */}
-            <Grid container spacing={16} columns={8}>
+            <Grid container spacing={2} >
               {state.clubs.map((club) => (
-                <Grid item key={club.id} xs={12} sm={6} md={4}>
+                <Grid item key={club.id} xs={3}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', background: Colors.light_gray }}
                   >

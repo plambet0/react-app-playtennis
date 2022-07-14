@@ -108,8 +108,8 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
         </span>
       </DialogTitle>
       <DialogContent style={{ padding: 0}}>
-        <Grid container style={{ marginTop: '38px' }}>
-          <Grid item xs={9}>
+        <Grid container style={{ marginTop: '38px' }} spacing={2} padding={'15px'}>
+          <Grid item xs={8} >
             <TextField
               fullWidth
               required
@@ -129,8 +129,8 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                 style: { color: '#12497F' }
               }}
             />
-            </Grid>
-            <Grid item xs={9}>
+          </Grid>
+          <Grid item xs={4}>
             <TextField
               fullWidth
               required
@@ -150,7 +150,8 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                 style: { color: '#12497F' }
               }}
             />
-            <Grid item xs={9}>
+            </Grid>
+            <Grid item xs={6} >
             <TextField
               fullWidth
               required
@@ -171,7 +172,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               }}
             />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={6}>
             <TextField
               fullWidth
               required
@@ -192,7 +193,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               }}
             />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={12}>
             <TextField
               fullWidth
               required
@@ -213,7 +214,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               }}
             />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={12}>
             <TextField
               fullWidth
               required
@@ -233,7 +234,6 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
                 style: { color: '#12497F' }
               }}
             />
-            </Grid>
             </Grid>
             <Grid container style={{ marginTop: '115px', marginBottom: '40px' }}>
               <Grid item xs={12} style={{ textAlign: 'center'}}>
