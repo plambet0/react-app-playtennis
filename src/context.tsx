@@ -1,7 +1,9 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
 import {
   clubReducer,
-  ActionType
+  ActionType,
+  messageReducer,
+  confirmationReducer
 } from './reducers';
 
 import { IClub } from './components/clubs';
@@ -12,11 +14,30 @@ type Props = {
 }
 
 type InitialStateType = {
-  clubs: IClub[]
+  clubs: IClub[],
+  message: MessageType;
+  confirmation: ConfirmationType;
+};
+
+type MessageType = {
+  open: boolean;
+  text: string | null;
+  autoHide: number;
+  severity: 'success' | 'error' | 'warning' | 'info' | null;
+};
+
+type ConfirmationType = {
+  open: boolean;
+  title?: string | null;
+  text?: string | null;
+  agreeAction?: (params?: string) => void;
+  params?: string;
 };
 
 export const InitialState = {
-  clubs: clubsData
+  clubs: clubsData,
+  message: { open: false, text: null, severity: null, autoHide: 3000 },
+  confirmation: { open: false },
 };
 
 const Context = createContext<{
@@ -29,11 +50,16 @@ const Context = createContext<{
 
 const mainReducer = (
   {
-   clubs
+   clubs,
+   confirmation,
+   message
   }: InitialStateType,
   action: ActionType
 ) => ({
   clubs: clubReducer(clubs, action),
+  message: messageReducer(message, action),
+  confirmation: confirmationReducer(confirmation, action),
+
 });
 
 
@@ -45,5 +71,10 @@ const AppProvider: React.FC<Props> = ({ children } : Props) => {
 
 export {
   Context,
-  AppProvider
+  AppProvider,
+  
 };
+export type {
+  MessageType,
+  ConfirmationType
+}

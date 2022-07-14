@@ -36,10 +36,20 @@ export default function Clubs() {
         setclubInfo(club);
         setOpenForm(true);
     }
-   
+    const remove = (club: IClub) =>
+    dispatch({
+      type: Actions.ShowConfirmation,
+      payload: {
+        text: `Are you sure you want to delete ${club.name}?`,
+        agreeAction: handleDelete,
+        params: club
+      }
+    });
     
     const  handleDelete = (club: IClub) => {
+        dispatch({ type: Actions.HideConfirmation });
         dispatch({type: Actions.DeleteClub, payload:{id:club.id}})
+        
     };
         
     
@@ -80,7 +90,7 @@ export default function Clubs() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button onClick={() => handleDelete(club)} size="small" variant='contained' color='success' >Delete</Button>
+                      <Button onClick={() => remove(club)} size="small" variant='contained' color='success' >Delete</Button>
                       <Button onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
                     </CardActions>
                   </Card>

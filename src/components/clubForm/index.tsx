@@ -60,8 +60,16 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
       };
       if (!clubInput) {
         dispatch({type: Actions.AddClub, payload: club})
+        dispatch({
+          type: Actions.ShowMessage,
+          payload: { text: `Club ${name} created`, severity: 'success', autoHide: 2000 }
+        });
       }else{
         dispatch({type: Actions.UpdateClub, payload: {id: clubInput.id, ...club}})
+        dispatch({
+          type: Actions.ShowMessage,
+          payload: { text: `Club ${name} updated`, severity: 'success', autoHide: 2000 }
+        });
       }
       handleClose();
     }

@@ -3,6 +3,8 @@ import { Container } from '@mui/system';
 import { useEffect } from 'react';
 import theme from './styles/theme';
 import Appbar from './components/appbar';
+import Message from './components/message';
+import Confirmation from './components/confirmation';
 
 function App() {
   useEffect(() => {
@@ -19,6 +21,8 @@ function App() {
     >
       <Appbar />
     </Container>
+    <Confirmation />
+    <Message />
     </ThemeProvider>
   );
 }
