@@ -1,7 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
 import { useState, useContext } from 'react';
 import { IClub } from '../clubs';
-import { v4 as uuid } from 'uuid';
 import { Context } from '../../context';
 import { Actions } from '../../ActionEnums';
 
@@ -13,9 +12,9 @@ type IProps = {
 export type IErrors = {
     name: string | null;
     city: string | null;
-    numberOfScourts: number | null;
+    numberOfScourts: string | null;
     surface: string | null;
-    pricePerHour: number | null;
+    pricePerHour: string | null;
     image: string | null;
   };
 
@@ -28,15 +27,6 @@ const defaultErrorsObj: IErrors = {
   image: null
 };
 
-const errorTexts = {
-    name: 'Name is required',
-    city: 'City is required',
-    numberOfScourts: 'Number of courts is required',
-    surface: 'Surface is required',
-    pricePerHour: 'Price per hour is required',
-  };
-
-
 export default function ClubForm({handleClose, clubInput} : IProps) {
     const [name, setName] = useState(clubInput?.name || '');
     const [city, setCity] = useState(clubInput?.city || '');
@@ -47,9 +37,50 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
     const {state, dispatch} = useContext(Context);
 
-   
+    const errorTexts = {
+      name: 'Name is required',
+      city: 'City is required',
+      numberOfScourts: 'Number of courts is required',
+      surface: 'Surface is required',
+      pricePerHour: 'Price per hour is required',
+      image: 'Image is required'
+    };
     
     const handleSubmit = (e:React.FormEvent) => {
+      const errors = {
+        name: null,
+        city: null,
+        numberOfScourts: null,
+        surface: null,
+        pricePerHour: null,
+        image: null
+      } as IErrors;
+
+      let hasErrors = false;
+      if (!name || name.length === 0) {
+        hasErrors = true;
+        errors.name = errorTexts.name;
+      }
+      if (!city || city.length ===0) {
+        hasErrors = true;
+        errors.city = errorTexts.city;
+      }
+      if (pricePerHour <= 0) {
+        hasErrors = true;
+        errors.pricePerHour = errorTexts.pricePerHour;
+      }
+      if (numberOfCourts <= 0) {
+        hasErrors = true;
+        errors.numberOfScourts = errorTexts.numberOfScourts;
+      }
+      if (!image || image.length === 0) {
+        hasErrors = true;
+        errors.image = errorTexts.image;
+      }
+      if (!surface || surface.length === 0) {
+        hasErrors = true;
+        errors.surface = errorTexts.surface;
+      }
       const club = {
         name: name,
         city: city,
@@ -58,20 +89,26 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
         surface: surface,
         image: image
       };
-      if (!clubInput) {
-        dispatch({type: Actions.AddClub, payload: club})
-        dispatch({
-          type: Actions.ShowMessage,
-          payload: { text: `Club ${name} created`, severity: 'success', autoHide: 2000 }
-        });
-      }else{
-        dispatch({type: Actions.UpdateClub, payload: {id: clubInput.id, ...club}})
-        dispatch({
-          type: Actions.ShowMessage,
-          payload: { text: `Club ${name} updated`, severity: 'success', autoHide: 2000 }
-        });
+      if (hasErrors) {
+        setFormErrors(errors);
+      }else {
+        if (!clubInput) {
+          dispatch({type: Actions.AddClub, payload: club})
+          dispatch({
+            type: Actions.ShowMessage,
+            payload: { text: `Club ${name} created`, severity: 'success', autoHide: 2000 }
+          });
+          handleClose();
+        }else{
+          dispatch({type: Actions.UpdateClub, payload: {id: clubInput.id, ...club}})
+          dispatch({
+            type: Actions.ShowMessage,
+            payload: { text: `Club ${name} updated`, severity: 'success', autoHide: 2000 }
+          });
+          handleClose();
+        }
       }
-      handleClose();
+      
     }
 
     

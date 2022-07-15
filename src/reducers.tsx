@@ -25,7 +25,7 @@ type ActionMap<M extends { [index: string]: any }> = {
         pricePerHour: number;
         numberOfCourts: number;
         surface: string;
-        image?: string;
+        image: string;
     };
     [Actions.DeleteClub]: {
       id: string;
@@ -37,7 +37,7 @@ type ActionMap<M extends { [index: string]: any }> = {
         pricePerHour: number;
         numberOfCourts: number;
         surface: string;
-        image?: string;
+        image: string;
     };
   };
   type MessagePayload = {

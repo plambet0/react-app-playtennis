@@ -21,7 +21,7 @@ export type IClub = {
     pricePerHour: number;
     numberOfCourts: number;
     surface: string;
-    image?: string;
+    image: string;
 };
 
 
