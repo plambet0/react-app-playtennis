@@ -7,6 +7,8 @@ import { useState } from 'react';
 import ClubForm from '../clubForm';
 import Clubs from '../clubs';
 import { Banner } from './banner';
+import Reservations from '../reservations';
+
 
 type IProps = {
     matches: boolean;
@@ -15,13 +17,18 @@ type IProps = {
 export default function AppbarDesktop({matches} : IProps) {
   const [loadClubForm, setloadClubForm] = useState(false);
   const [loadClubs, setloadClubs] = useState(false);
+  const [loadReservations, setloadReservations] = useState(false);
 
   const handleLoadClubs = () => {
-    setloadClubs(true);
+    setloadClubs(!loadClubs);
   }
 
   const handleLoadClubForm = () => {
     setloadClubForm(!loadClubForm);
+  }
+
+  const handleLoadReservations = () => {
+    setloadReservations(!loadReservations);
   }
 
     return (
@@ -34,15 +41,9 @@ export default function AppbarDesktop({matches} : IProps) {
              <Divider orientation="vertical" flexItem />
              <ListItemButton onClick={handleLoadClubs}>Clubs</ListItemButton>
              <Divider orientation="vertical" flexItem />
-             <ListItemButton>Players</ListItemButton>
-             <Divider orientation="vertical" flexItem />
-             <ListItemButton>Trainers</ListItemButton>
-             <Divider orientation="vertical" flexItem />
-             <ListItemButton>Become a player</ListItemButton>
-             <Divider orientation="vertical" flexItem />
              <ListItemButton onClick={handleLoadClubForm}>Add Club</ListItemButton>
              <Divider orientation="vertical" flexItem />
-             <ListItemButton>Contact us</ListItemButton>
+             <ListItemButton onClick={handleLoadReservations}>My Reservations</ListItemButton>
              <Divider orientation="vertical" flexItem />
              <ListItemButton>
                 <ListItemIcon>
@@ -55,6 +56,7 @@ export default function AppbarDesktop({matches} : IProps) {
       </AppbarContainer>
       <Banner/>
       {loadClubs && <Clubs/>}
+      {loadReservations && <Reservations/>}
       </>
     );
 

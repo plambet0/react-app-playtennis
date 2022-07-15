@@ -6,12 +6,14 @@ import Appbar from './components/appbar';
 import Message from './components/message';
 import Confirmation from './components/confirmation';
 
+
 function App() {
   useEffect(() => {
     document.title = 'Play Tennis - Home'
   })
 
   return (
+    <div>
     <ThemeProvider theme={theme}>
     <Container
       maxWidth="xl"
@@ -24,6 +26,7 @@ function App() {
     <Confirmation />
     <Message />
     </ThemeProvider>
+    </div>
   );
 }
 

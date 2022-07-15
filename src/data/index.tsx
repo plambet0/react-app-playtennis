@@ -36,3 +36,29 @@ export const clubsData = [
         image: "/images/clubs/TennisTab1-800x450.jpg"
     },
 ]
+export const reservationsData = [
+    {
+        id: 'sfdsdfds',
+        club: "Tennis Club Velto",
+        city: "Varna",
+        date: "15/07/2022 15:34",
+    },
+    {
+        id: 'asdasdad',
+        club: "Tennis Club Spartak",
+        city: "Varna",
+        date: "15/07/2022 15:34",
+    },
+    {
+        id: 'sdfsdfsf',
+        club: "Tennis Club Slunchev Den",
+        city: "Varna",
+        date: "15/07/2022 15:34",
+    },
+    {
+        id: 'sfdsfdsgdsgdfds',
+        club: "Tennis Club Elit",
+        city: "Varna",
+        date: "15/07/2022 15:34",
+    },
+]
