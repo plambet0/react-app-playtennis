@@ -6,4 +6,7 @@ export enum Actions {
     HideMessage = 'hide_message',
     ShowConfirmation = 'show_confirmation',
     HideConfirmation = 'hide_confirmation',
+    AddReservation = 'add_reservation',
+    DeleteReservation = 'delete_reservation',
+    UpdateReservation = 'update_reservation'
   }

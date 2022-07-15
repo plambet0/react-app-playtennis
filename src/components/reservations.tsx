@@ -1,11 +1,9 @@
-import { Box } from '@material-ui/core';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { DataGrid , GridColDef, GridValueGetterParams  } from '@mui/x-data-grid';
-import { Button } from '@material-ui/core';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@material-ui/core/styles';
-import { reservationsData } from '../data';
+import { Context } from '../context';
 
 export type IReservation = {
     id: string ;
@@ -41,7 +39,7 @@ const useStyles = makeStyles(() => ({
   }));
 
   export default function Reservations() {
-    const [reservations, setReservations] = useState(reservationsData);
+    const {state, dispatch} = useContext(Context)
     const classes = useStyles();
     const [reservation, setReservation] = useState<IReservation>();
 
@@ -116,10 +114,10 @@ const useStyles = makeStyles(() => ({
       ];
         
       return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 400, width: '100%', paddingTop: '20px'}}>
       <DataGrid
         columns={columns}
-        rows={reservations}
+        rows={state.reservations}
         pageSize={5}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick

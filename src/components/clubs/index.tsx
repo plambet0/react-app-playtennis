@@ -30,6 +30,7 @@ export default function Clubs() {
     const {state, dispatch} = useContext(Context)
     const [clubInfo, setclubInfo] = useState<IClub>();
     const [openForm, setOpenForm] = useState(false);
+    const [openReservationForm, setopenReservationForm] = useState(false);
     
    
     const handleEdit = (club : IClub) => {
@@ -51,10 +52,15 @@ export default function Clubs() {
         dispatch({type: Actions.DeleteClub, payload:{id:club.id}})
         
     };
+
+    const  handleReservation = (club: IClub) => {
+      console.log(club.id)
+      
+  };
         
     
     return(
-            <Container sx={{ py: 8 }} maxWidth="md">
+            <Container sx={{ py: 6 }} maxWidth={'lg'}>
             {/* End hero unit */}
             <Grid container spacing={2} >
               {state.clubs.map((club) => (
@@ -64,7 +70,7 @@ export default function Clubs() {
                   >
                     <CardMedia
                       component="img"
-                      height='330'
+                      height='230'
                       sx={{
                         // 16:9
                         pt: '56.25%',
@@ -92,6 +98,7 @@ export default function Clubs() {
                     <CardActions>
                       <Button onClick={() => remove(club)} size="small" variant='contained' color='success' >Delete</Button>
                       <Button onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
+                      <Button onClick={() => handleReservation(club)} size="small" variant='contained' color='secondary'>Reserve</Button>
                     </CardActions>
                   </Card>
                 </Grid>

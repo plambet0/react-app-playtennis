@@ -3,11 +3,13 @@ import {
   clubReducer,
   ActionType,
   messageReducer,
-  confirmationReducer
+  confirmationReducer,
+  reservationReducer
 } from './reducers';
 
 import { IClub } from './components/clubs';
-import { clubsData } from './data';
+import { clubsData, reservationsData } from './data';
+import { IReservation } from './components/reservations';
 
 type Props = {
   children: JSX.Element
@@ -15,6 +17,7 @@ type Props = {
 
 type InitialStateType = {
   clubs: IClub[],
+  reservations: IReservation[],
   message: MessageType;
   confirmation: ConfirmationType;
 };
@@ -36,6 +39,7 @@ type ConfirmationType = {
 
 export const InitialState = {
   clubs: clubsData,
+  reservations: reservationsData,
   message: { open: false, text: null, severity: null, autoHide: 3000 },
   confirmation: { open: false },
 };
@@ -51,12 +55,14 @@ const Context = createContext<{
 const mainReducer = (
   {
    clubs,
+   reservations,
    confirmation,
    message
   }: InitialStateType,
   action: ActionType
 ) => ({
   clubs: clubReducer(clubs, action),
+  reservations: reservationReducer(reservations, action),
   message: messageReducer(message, action),
   confirmation: confirmationReducer(confirmation, action),
 

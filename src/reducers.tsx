@@ -3,9 +3,10 @@
 import { Actions } from './ActionEnums';
 import { IClub } from './components/clubs';
 import { v4 as uuid } from 'uuid';
-import { MessageType, ConfirmationType } from './context'
+import { MessageType, ConfirmationType } from './context';
+import { IReservation } from './components/reservations';
 export type ActionType =
-  ClubActions | MessageActions | ConfirmationActions
+  ClubActions | MessageActions | ConfirmationActions | ReservationActions
 
 type ActionMap<M extends { [index: string]: any }> = {
     [Key in keyof M]: M[Key] extends undefined
@@ -59,9 +60,27 @@ type ActionMap<M extends { [index: string]: any }> = {
     [Actions.HideConfirmation]: undefined;
   };
 
+  type ReservationPayload = {
+    [Actions.AddReservation]: {
+      club: string ;
+      city: string;
+      date: string;
+  };
+  [Actions.DeleteReservation]: {
+    id: string;
+  }
+  [Actions.UpdateReservation] : {
+      id: string ;
+      club: string ;
+      city: string;
+      date: string;
+  };
+  };
+
   export type ClubActions = ActionMap<ClubPayload>[keyof ActionMap<ClubPayload>];
   export type MessageActions = ActionMap<MessagePayload>[keyof ActionMap<MessagePayload>];
   export type ConfirmationActions = ActionMap<ConfirmationPayload>[keyof ActionMap<ConfirmationPayload>];
+  export type ReservationActions = ActionMap<ReservationPayload>[keyof ActionMap<ReservationPayload>];
 
   export const clubReducer = (state: IClub[], action: ActionType): IClub[] => {
     switch (action.type) {
@@ -70,6 +89,19 @@ type ActionMap<M extends { [index: string]: any }> = {
       case Actions.DeleteClub:
         return state.filter((c) => c.id !== action.payload.id)
       case Actions.UpdateClub:
+      return state.map((c) => c.id === action.payload.id ? action.payload : c)
+      default:
+        return state;
+    }
+  };
+
+  export const reservationReducer = (state: IReservation[], action: ActionType): IReservation[] => {
+    switch (action.type) {
+      case Actions.AddReservation:
+        return [{id: uuid(), ...action.payload}, ...state]
+      case Actions.DeleteReservation:
+        return state.filter((c) => c.id !== action.payload.id)
+      case Actions.UpdateReservation:
       return state.map((c) => c.id === action.payload.id ? action.payload : c)
       default:
         return state;
