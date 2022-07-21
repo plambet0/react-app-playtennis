@@ -12,6 +12,7 @@ import { useState, useContext } from 'react';
 import ClubForm from '../clubForm';
 import { Context } from '../../context';
 import { Actions } from '../../ActionEnums';
+import ReservationForm from '../reservationForm';
 
 
 export type IClub = {
@@ -54,8 +55,8 @@ export default function Clubs() {
     };
 
     const  handleReservation = (club: IClub) => {
-      console.log(club.id)
-      
+      setopenReservationForm(true);
+      setclubInfo(club);
   };
         
     
@@ -105,6 +106,7 @@ export default function Clubs() {
               ))}
             </Grid>
             {openForm && <ClubForm handleClose={() => setOpenForm(false)} clubInput={clubInfo}/>}
+            {openReservationForm && <ReservationForm handleClose={() => setopenReservationForm(false)} clubInput={clubInfo}/>}
           </Container>
           
     )

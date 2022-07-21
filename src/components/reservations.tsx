@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import { Context } from '../context';
+import { Colors } from '../styles/theme';
 
 export type IReservation = {
     id: string ;
@@ -121,6 +122,16 @@ const useStyles = makeStyles(() => ({
         pageSize={5}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
+        sx={{
+            boxShadow: 2,
+            borderRadius: '10px',
+            border: 2,
+            borderColor: 'primary.light',
+            '& .MuiDataGrid-cell:hover': {
+              color: 'primary.main',
+            },
+            backgroundColor: Colors.light_gray
+          }}
       />
     </div>
       );
