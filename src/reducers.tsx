@@ -64,7 +64,7 @@ type ActionMap<M extends { [index: string]: any }> = {
     [Actions.AddReservation]: {
       club: string ;
       city: string;
-      date: string;
+      date?: string;
   };
   [Actions.DeleteReservation]: {
     id: string;

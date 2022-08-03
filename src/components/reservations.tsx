@@ -5,12 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import { Context } from '../context';
 import { Colors } from '../styles/theme';
+import { Actions } from '../ActionEnums';
 
 export type IReservation = {
     id: string ;
     club: string ;
     city: string;
-    date: string;
+    date?: string;
 };
 
 const useStyles = makeStyles(() => ({
@@ -55,13 +56,14 @@ const useStyles = makeStyles(() => ({
         return <DeleteIcon 
          className={classes.Button} 
          style={{color: '#F44336', border: '1px solid ' + '#F44336'}} 
-         onClick={() => deleteCompanyFunc(params.row.id)}>
+         onClick={() => deleteReservationFunc(params.row.id)}>
            DELETE
            </DeleteIcon >
       }
 
-      const deleteCompanyFunc = (id: string) => {
-        console.log(id);
+      const deleteReservationFunc = (id: string) => {
+        dispatch({ type: Actions.HideConfirmation });
+        dispatch({type: Actions.DeleteReservation, payload:{id:id}})
         
       };
 

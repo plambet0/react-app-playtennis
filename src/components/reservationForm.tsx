@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid} from '@mui/material';
 import { useState, useContext } from 'react';
 import { IClub } from './clubs';
 import { Context } from '../context'
@@ -15,32 +15,11 @@ type IProps = {
     clubInput?: IClub | undefined;
 }
 
-export type IErrors = {
-    name: string | null;
-    city: string | null;
-    numberOfScourts: string | null;
-    surface: string | null;
-    pricePerHour: string | null;
-    image: string | null;
-  };
 
-const defaultErrorsObj: IErrors = {
-  name: null,
-  city: null,
-  numberOfScourts: null,
-  surface: null,
-  pricePerHour: null,
-  image: null
-};
 
 export default function ReservationForm({handleClose, clubInput} : IProps) {
     const [name, setName] = useState(clubInput?.name || '');
     const [city, setCity] = useState(clubInput?.city || '');
-    const [pricePerHour, setpricePerHour] = useState(clubInput?.pricePerHour || 0);
-    const [numberOfCourts, setNumberOfCourts] = useState(clubInput?.numberOfCourts || 0);
-    const [surface, setSurface] = useState(clubInput?.surface || '');
-    const [image, setImage] = useState(clubInput?.image || '');
-    const [formErrors, setFormErrors] = useState(defaultErrorsObj);
     const {state, dispatch} = useContext(Context);
     const [date, setDate] = useState<MaterialUiPickersDate | null>(new Date());
 
@@ -54,8 +33,17 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
     };
     
     const handleSubmit = (e:React.FormEvent) => {
-      
-      console.log(date);
+      const reservation = {
+        club: name,
+        city: city,
+        date: `${date?.toDateString()} ${`${date?.getHours()}:00`}`
+      };
+      dispatch({type: Actions.AddReservation, payload: reservation})
+      dispatch({
+        type: Actions.ShowMessage,
+        payload: { text: `Reservation for club ${name} created`, severity: 'success', autoHide: 2000 }
+      });
+      handleClose();
     }
 
     
@@ -101,15 +89,7 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
               id="name"
               label="Club Name (full)"
               name="name"
-              error={formErrors.name !== null}
-              helperText={formErrors.name ? formErrors.name : ''}
               value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              InputLabelProps={{
-                style: { color: formErrors.name !== null ? 'red' : '#12497F' }
-              }}
               inputProps={{
                 style: { color: '#12497F' }
               }}
@@ -123,23 +103,14 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
               id="city"
               label="City (full)"
               name="city"
-              error={formErrors.city !== null}
-              helperText={formErrors.city ? formErrors.city : ''}
-              value={city}
-              onChange={(e) => {
-                setCity(e.target.value);
-              }}
-              InputLabelProps={{
-                style: { color: formErrors.city !== null ? 'red' : '#12497F' }
-              }}
               inputProps={{
                 style: { color: '#12497F' }
               }}
             />
             </Grid>
-            <Grid container>
+            <Grid container style={{ marginTop: '38px' }} spacing={2} padding={'15px'}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid item xs={4} style={{ paddingRight: '3.2%' }}>
+                <Grid item xs={12} style={{ textAlign: 'center'}}>
                   <DateTimePicker
                     disablePast
                     value={date}
@@ -151,7 +122,7 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
             <Grid container style={{ marginTop: '115px', marginBottom: '40px' }}>
               <Grid item xs={12} style={{ textAlign: 'center'}}>
                 <Button
-                  id="cancel-new-company-button"
+                  id="close-reservation-button"
                   data-testid="cancel-new-company-button"
                 //   className={classes.cancelButton}
                   onClick={handleClose}
@@ -159,8 +130,8 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
                   Cancel
                 </Button>
                 <Button
-                  id="create-new-company-button"
-                  data-testid="create-new-company-button"
+                  id="create-new-reservation-button"
+                  data-testid="create-new-reservation-button"
                 //   className={classes.createButton}
                   onClick={(e) => {
                     handleSubmit(e)}}
