@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Context } from '../context';
 import { Colors } from '../styles/theme';
 import { Actions } from '../ActionEnums';
+import ReservationForm from '../components/reservationForm';
 
 export type IReservation = {
     id: string ;
@@ -44,11 +45,12 @@ const useStyles = makeStyles(() => ({
     const {state, dispatch} = useContext(Context)
     const classes = useStyles();
     const [reservation, setReservation] = useState<IReservation>();
+    const [openReservationForm, setopenReservationForm] = useState(false);
 
     const renderEdit = (params: GridValueGetterParams) => {
         return <EditIcon 
         className={classes.Button}
-        onClick={() => setReservation(params.row)}>
+        onClick={() => handleEdit(params.row)}>
           EDIT</EditIcon>
       }
     
@@ -77,6 +79,11 @@ const useStyles = makeStyles(() => ({
         dispatch({type: Actions.DeleteReservation, payload:{id:id}})
         
       };
+
+      const handleEdit = (reservation : IReservation) => {
+        setReservation(reservation);
+        setopenReservationForm(true);
+    }
 
     const columns: GridColDef[] = [
         { 
@@ -146,6 +153,7 @@ const useStyles = makeStyles(() => ({
             backgroundColor: Colors.light_gray
           }}
       />
+      {openReservationForm && <ReservationForm handleClose={() => setopenReservationForm(false)} reservationInput={reservation}/>}
     </div>
       );
   }

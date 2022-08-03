@@ -7,43 +7,47 @@ import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { IReservation } from './reservations';
 
 
 
 type IProps = {
     handleClose: () => void;
     clubInput?: IClub | undefined;
+    reservationInput?: IReservation;
 }
 
 
 
-export default function ReservationForm({handleClose, clubInput} : IProps) {
-    const [name, setName] = useState(clubInput?.name || '');
-    const [city, setCity] = useState(clubInput?.city || '');
+export default function ReservationForm({handleClose, clubInput, reservationInput} : IProps) {
+    const [name, setName] = useState(clubInput?.name || reservationInput?.club || '');
+    const [city, setCity] = useState(clubInput?.city || reservationInput?.city || '');
     const {state, dispatch} = useContext(Context);
     const [date, setDate] = useState<MaterialUiPickersDate | null>(new Date());
 
-    const errorTexts = {
-      name: 'Name is required',
-      city: 'City is required',
-      numberOfScourts: 'Number of courts is required',
-      surface: 'Surface is required',
-      pricePerHour: 'Price per hour is required',
-      image: 'Image is required'
-    };
-    
+  
     const handleSubmit = (e:React.FormEvent) => {
       const reservation = {
         club: name,
         city: city,
         date: `${date?.toDateString()} ${`${date?.getHours()}:00`}`
       };
-      dispatch({type: Actions.AddReservation, payload: reservation})
-      dispatch({
-        type: Actions.ShowMessage,
-        payload: { text: `Reservation for club ${name} created`, severity: 'success', autoHide: 2000 }
-      });
-      handleClose();
+      if (!reservationInput){
+        dispatch({type: Actions.AddReservation, payload: reservation as IReservation})
+        dispatch({
+          type: Actions.ShowMessage,
+          payload: { text: `Reservation for club ${name} created`, severity: 'success', autoHide: 2000 }
+        });
+        handleClose();
+      }else{
+        dispatch({type: Actions.UpdateReservation, payload: {id: reservationInput.id, ...reservation}})
+        dispatch({
+          type: Actions.ShowMessage,
+          payload: { text: `Reservation for club ${name} updated`, severity: 'success', autoHide: 2000 }
+        });
+        handleClose();
+      }
+      
     }
 
     
@@ -103,6 +107,7 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
               id="city"
               label="City (full)"
               name="city"
+              value={city}
               inputProps={{
                 style: { color: '#12497F' }
               }}
@@ -124,7 +129,6 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
                 <Button
                   id="close-reservation-button"
                   data-testid="cancel-new-company-button"
-                //   className={classes.cancelButton}
                   onClick={handleClose}
                 >
                   Cancel
@@ -132,11 +136,10 @@ export default function ReservationForm({handleClose, clubInput} : IProps) {
                 <Button
                   id="create-new-reservation-button"
                   data-testid="create-new-reservation-button"
-                //   className={classes.createButton}
                   onClick={(e) => {
                     handleSubmit(e)}}
                 >
-                  Reserve
+                  {!reservationInput ? 'Reserve' : 'Update'}
                 </Button>
               </Grid>
             </Grid>
