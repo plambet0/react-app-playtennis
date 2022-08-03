@@ -56,11 +56,22 @@ const useStyles = makeStyles(() => ({
         return <DeleteIcon 
          className={classes.Button} 
          style={{color: '#F44336', border: '1px solid ' + '#F44336'}} 
-         onClick={() => deleteReservationFunc(params.row.id)}>
+         onClick={() => remove(params.row.id)}>
            DELETE
            </DeleteIcon >
       }
 
+      const remove = (id:string) =>
+      dispatch({
+        type: Actions.ShowConfirmation,
+        payload: {
+          text: `Are you sure you want to delete reservation ${id}?`,
+          agreeAction: deleteReservationFunc,
+          params: id
+        }
+      });
+      
+      
       const deleteReservationFunc = (id: string) => {
         dispatch({ type: Actions.HideConfirmation });
         dispatch({type: Actions.DeleteReservation, payload:{id:id}})
