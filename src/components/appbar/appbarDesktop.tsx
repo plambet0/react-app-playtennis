@@ -1,7 +1,6 @@
 
 import { ListItemButton, Divider, ListItemIcon } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
-import Actions from "./actions";
 import { MyList, AppbarContainer, AppBarHeader} from "../../styles/appbar";
 import { useState } from 'react';
 import ClubForm from '../clubForm';
@@ -10,11 +9,7 @@ import { Banner } from './banner';
 import Reservations from '../reservations';
 
 
-type IProps = {
-    matches: boolean;
-  };
-
-export default function AppbarDesktop({matches} : IProps) {
+export default function AppbarDesktop() {
   const [loadClubForm, setloadClubForm] = useState(false);
   const [loadClubs, setloadClubs] = useState(false);
   const [loadReservations, setloadReservations] = useState(false);
@@ -45,12 +40,6 @@ export default function AppbarDesktop({matches} : IProps) {
              <Divider orientation="vertical" flexItem />
              <ListItemButton onClick={handleLoadReservations}>My Reservations</ListItemButton>
              <Divider orientation="vertical" flexItem />
-             <ListItemButton>
-                <ListItemIcon>
-                    <SearchIcon />
-                </ListItemIcon>
-             </ListItemButton>
-             <Actions matches={matches}/>
         </MyList>
         {loadClubForm && <ClubForm handleClose={() => {setloadClubForm(false)}}/>}
       </AppbarContainer>

@@ -1,12 +1,11 @@
 import { useTheme } from "@mui/material/styles";
-import { Typography, useMediaQuery } from "@mui/material";
+import { Typography } from "@mui/material";
 import { BannerContainer, BannerContent, BannerDescription, BannerImage, BannerTitle } from "../../../styles/banner";
 
 
 export function Banner() {
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <BannerContainer>

@@ -8,11 +8,12 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../styles/theme';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import ClubForm from '../clubForm';
 import { Context } from '../../context';
 import { Actions } from '../../ActionEnums';
 import ReservationForm from '../reservationForm';
+import { TextField } from '@mui/material';
 
 
 export type IClub = {
@@ -32,8 +33,20 @@ export default function Clubs() {
     const [clubInfo, setclubInfo] = useState<IClub>();
     const [openForm, setOpenForm] = useState(false);
     const [openReservationForm, setopenReservationForm] = useState(false);
+    const [query, setQuery] = useState('');
+    const [clubs, setClubs] = useState(state.clubs);
     
-   
+    useEffect(() => {
+      if (state && state.clubs) {
+        if (query.length > 0) {
+          setClubs(state.clubs.filter((c) => c.name.toLowerCase().includes(query.toLowerCase())));
+        } else {
+          setClubs(state.clubs);
+        }
+      }
+    }, [query]);
+    
+    
     const handleEdit = (club : IClub) => {
         setclubInfo(club);
         setOpenForm(true);
@@ -63,8 +76,17 @@ export default function Clubs() {
     return(
             <Container sx={{ py: 6 }} maxWidth={'lg'}>
             {/* End hero unit */}
+            <Grid container style={{ paddingBottom: 15}} >
+            <TextField
+            placeholder="Search by Club Name ..."
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+            style={{ borderRadius: 5, background: Colors.light_gray }}
+            />
+            </Grid>
             <Grid container spacing={2} >
-              {state.clubs.map((club) => (
+              {clubs.map((club) => (
                 <Grid item key={club.id} xs={3}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', background: Colors.light_gray }}

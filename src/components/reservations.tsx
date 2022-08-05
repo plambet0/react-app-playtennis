@@ -90,14 +90,14 @@ const useStyles = makeStyles(() => ({
           field: 'id',
           headerName: 'ID', 
           headerClassName: 'super-app-theme--header',
-          width: 245,
+          width: 345,
           valueGetter: (params: GridValueGetterParams) => params.row.id
         },
         {
           field: 'Club',
           headerName: 'Club',
           headerClassName: 'super-app-theme--header',
-          width: 255,
+          width: 355,
           editable: true,
           valueGetter: (params: GridValueGetterParams) => params.row.club
         },
@@ -121,7 +121,7 @@ const useStyles = makeStyles(() => ({
           field: 'EDIT',
           headerName: 'EDIT',
           headerClassName: 'super-app-theme--header',
-          width: 245,
+          width: 135,
           renderCell: renderEdit
         }
         ,
@@ -129,7 +129,7 @@ const useStyles = makeStyles(() => ({
           field: 'DELETE',
           headerName: 'DELETE',
           headerClassName: 'super-app-theme--header',
-          width: 245,
+          width: 135,
           renderCell: renderDelete
         }
       ];
