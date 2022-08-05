@@ -34,11 +34,14 @@ export default function Clubs() {
     const [openForm, setOpenForm] = useState(false);
     const [openReservationForm, setopenReservationForm] = useState(false);
     const [query, setQuery] = useState('');
+    const [clubs, setClubs] = useState(state.clubs);
     
     useEffect(() => {
       if (state && state.clubs) {
         if (query.length > 0) {
-          state.clubs = state.clubs.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()));
+          setClubs(state.clubs.filter((c) => c.name.toLowerCase().includes(query.toLowerCase())));
+        } else {
+          setClubs(state.clubs);
         }
       }
     }, [query]);
@@ -83,7 +86,7 @@ export default function Clubs() {
             />
             </Grid>
             <Grid container spacing={2} >
-              {state.clubs.map((club) => (
+              {clubs.map((club) => (
                 <Grid item key={club.id} xs={3}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', background: Colors.light_gray }}
