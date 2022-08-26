@@ -1,16 +1,12 @@
-import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import { BannerContainer, BannerContent, BannerDescription, BannerImage, BannerTitle } from "../../../styles/banner";
 
 
 export function Banner() {
 
-  const theme = useTheme();
-
   return (
     <BannerContainer>
             <BannerImage src="/images/banner/tennis-court.jpg">
-
             </BannerImage>
         <BannerContent>
             <Typography variant="h6">Wellcome to "Play tennis" in</Typography>

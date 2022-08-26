@@ -8,6 +8,7 @@ import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { IReservation } from './reservations';
+import { Colors } from '../styles/theme';
 
 
 
@@ -20,9 +21,9 @@ type IProps = {
 
 
 export default function ReservationForm({handleClose, clubInput, reservationInput} : IProps) {
-    const [name, setName] = useState(clubInput?.name || reservationInput?.club || '');
-    const [city, setCity] = useState(clubInput?.city || reservationInput?.city || '');
-    const {state, dispatch} = useContext(Context);
+    const [name] = useState(clubInput?.name || reservationInput?.club || '');
+    const [city] = useState(clubInput?.city || reservationInput?.city || '');
+    const {dispatch} = useContext(Context);
     const [date, setDate] = useState<MaterialUiPickersDate | null>(new Date());
 
   
@@ -56,13 +57,12 @@ export default function ReservationForm({handleClose, clubInput, reservationInpu
     <Dialog 
     id="new-club-dialog" 
     open={true} 
-    // classes={{ paper: classes.paperNew }}
     BackdropProps={{ style: { background: '#1297FCC 0% 0% no-repeat padding-box' } }}
     >
       <DialogTitle
         id="form-dialog-title"
         style={{
-          borderBottom: '1px solid ' + '#0EAEFF',
+          borderBottom: '1px solid ' + Colors.secondary,
           textAlign: 'center',
           paddingTop: '15px',
           paddingBottom: '13px'
@@ -71,7 +71,7 @@ export default function ReservationForm({handleClose, clubInput, reservationInpu
         <span
           style={{
             margin: 'auto',
-            color: '#0EAEFF',
+            color: Colors.secondary,
             letterSpacing: '-0.01px',
             fontSize: '22px',
             lineHeight: '33px',

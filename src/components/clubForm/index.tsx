@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid, RadioGroup, FormLabel, FormControlLabel, Radio } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid} from '@mui/material';
 import { useState, useContext } from 'react';
 import { IClub } from '../clubs';
 import { Context } from '../../context';
@@ -35,7 +35,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
     const [surface, setSurface] = useState(clubInput?.surface || '');
     const [image, setImage] = useState(clubInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
-    const {state, dispatch} = useContext(Context);
+    const {dispatch} = useContext(Context);
 
     const errorTexts = {
       name: 'Name is required',

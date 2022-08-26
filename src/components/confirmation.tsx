@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
@@ -13,20 +11,8 @@ import {
 import { Context } from '../context';
 import { Actions } from '../ActionEnums';
 
-// const useStyles = makeStyles(() => {
-//   return {
-//     paper: { borderRadius: '10px' },
-//     button: {
-//       ...Theme.Buttons.save
-//     },
-//     button_secondary: {
-//       ...Theme.Buttons.cancel
-//     }
-//   };
-// });
 
 const Confirmation: React.FunctionComponent = () => {
-    //const classes = useStyles();
     const { state, dispatch } = useContext(Context);
   
     const handleAgree = () => {

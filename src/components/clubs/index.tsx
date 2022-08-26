@@ -74,9 +74,9 @@ export default function Clubs() {
         
     
     return(
-            <Container sx={{ py: 6 }} maxWidth={'lg'}>
+            <Container sx={{paddingTop: '20px', width: '100%'}} >
             {/* End hero unit */}
-            <Grid container style={{ paddingBottom: 15}} >
+            <Grid container style={{ paddingBottom: '20px'}} >
             <TextField
             placeholder="Search by Club Name ..."
             onChange={(e) => {

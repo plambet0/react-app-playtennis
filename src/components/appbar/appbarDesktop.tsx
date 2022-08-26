@@ -1,6 +1,5 @@
 
-import { ListItemButton, Divider, ListItemIcon } from '@mui/material';
-import SearchIcon from "@mui/icons-material/Search";
+import { ListItemButton, Divider } from '@mui/material';
 import { MyList, AppbarContainer, AppBarHeader} from "../../styles/appbar";
 import { useState } from 'react';
 import ClubForm from '../clubForm';
