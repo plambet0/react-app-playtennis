@@ -62,3 +62,22 @@ export const reservationsData = [
         date: "15/07/2022 15:34",
     },
 ]
+
+export const playersData = [
+    {
+        id: 'sfdsdfds',
+        city: "Varna",
+        name: 'Plamen Uzunov',
+        hand: 'right',
+        sex: 'male',
+        image: '/images/players/np_file_174335.jpeg'
+    },
+    {
+        id: 'adasdsda',
+        city: "Varna",
+        name: 'Alex Uzunova',
+        hand: 'right',
+        sex: 'female',
+        image: '/images/players/media-32933.jpeg'
+    }
+]

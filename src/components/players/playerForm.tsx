@@ -1,48 +1,53 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid} from '@mui/material';
 import { useState, useContext } from 'react';
-import { IClub } from '../clubs';
 import { Context } from '../../context';
 import { Actions } from '../../ActionEnums';
 
+export type IPlayer = {
+  id: string ;
+  name: string ;
+  city: string;
+  hand: string;
+  sex: string;
+  image: string;
+};
+
+
 type IProps = {
     handleClose: () => void;
-    clubInput?: IClub | undefined;
+    playerInput?: IPlayer | undefined;
 }
 
 export type IErrors = {
     name: string | null;
     city: string | null;
-    numberOfScourts: string | null;
-    surface: string | null;
-    pricePerHour: string | null;
+    hand: string | null;
+    sex: string | null;
     image: string | null;
   };
 
 const defaultErrorsObj: IErrors = {
   name: null,
   city: null,
-  numberOfScourts: null,
-  surface: null,
-  pricePerHour: null,
-  image: null
+  hand: null,
+  sex: null,
+  image: null,
 };
 
-export default function ClubForm({handleClose, clubInput} : IProps) {
-    const [name, setName] = useState(clubInput?.name || '');
-    const [city, setCity] = useState(clubInput?.city || '');
-    const [pricePerHour, setpricePerHour] = useState(clubInput?.pricePerHour || 0);
-    const [numberOfCourts, setNumberOfCourts] = useState(clubInput?.numberOfCourts || 0);
-    const [surface, setSurface] = useState(clubInput?.surface || '');
-    const [image, setImage] = useState(clubInput?.image || '');
+export default function PlayerForm({handleClose, playerInput} : IProps) {
+    const [name, setName] = useState(playerInput?.name || '');
+    const [city, setCity] = useState(playerInput?.city || '');
+    const [hand, setHand] = useState(playerInput?.hand || '');
+    const [sex, setSex] = useState(playerInput?.sex || '');
+    const [image, setImage] = useState(playerInput?.image || '');
     const [formErrors, setFormErrors] = useState(defaultErrorsObj);
     const {dispatch} = useContext(Context);
 
     const errorTexts = {
       name: 'Name is required',
       city: 'City is required',
-      numberOfScourts: 'Number of courts is required',
-      surface: 'Surface is required',
-      pricePerHour: 'Price per hour is required',
+      hand: 'Hand is required',
+      sex: 'Sex is required',
       image: 'Image is required'
     };
     
@@ -50,9 +55,8 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
       const errors = {
         name: null,
         city: null,
-        numberOfScourts: null,
-        surface: null,
-        pricePerHour: null,
+        hand: null,
+        sex: null,
         image: null
       } as IErrors;
 
@@ -65,45 +69,40 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
         hasErrors = true;
         errors.city = errorTexts.city;
       }
-      if (pricePerHour <= 0) {
+      if (!hand || city.length ===0) {
         hasErrors = true;
-        errors.pricePerHour = errorTexts.pricePerHour;
+        errors.hand = errorTexts.hand;
       }
-      if (numberOfCourts <= 0) {
+      if (!sex || sex.length ===0) {
         hasErrors = true;
-        errors.numberOfScourts = errorTexts.numberOfScourts;
+        errors.sex = errorTexts.sex;
       }
       if (!image || image.length === 0) {
         hasErrors = true;
         errors.image = errorTexts.image;
       }
-      if (!surface || surface.length === 0) {
-        hasErrors = true;
-        errors.surface = errorTexts.surface;
-      }
-      const club = {
+      const player = {
         name: name,
         city: city,
-        pricePerHour: pricePerHour,
-        numberOfCourts: numberOfCourts,
-        surface: surface,
+        hand: hand,
+        sex: sex,
         image: image
       };
       if (hasErrors) {
         setFormErrors(errors);
       }else {
-        if (!clubInput) {
-          dispatch({type: Actions.AddClub, payload: club})
+        if (!playerInput) {
+          dispatch({type: Actions.AddPlayer, payload: player})
           dispatch({
             type: Actions.ShowMessage,
-            payload: { text: `Club ${name} created`, severity: 'success', autoHide: 2000 }
+            payload: { text: `Player ${name} created`, severity: 'success', autoHide: 2000 }
           });
           handleClose();
         }else{
-          dispatch({type: Actions.UpdateClub, payload: {id: clubInput.id, ...club}})
+          dispatch({type: Actions.UpdatePlayer, payload: {id: playerInput.id, ...player}})
           dispatch({
             type: Actions.ShowMessage,
-            payload: { text: `Club ${name} updated`, severity: 'success', autoHide: 2000 }
+            payload: { text: `Player ${name} updated`, severity: 'success', autoHide: 2000 }
           });
           handleClose();
         }
@@ -115,7 +114,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
 
     return(
     <Dialog 
-    id="new-club-dialog" 
+    id="new-player-dialog" 
     open={true} 
     // classes={{ paper: classes.paperNew }}
     BackdropProps={{ style: { background: '#1297FCC 0% 0% no-repeat padding-box' } }}
@@ -141,7 +140,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
             width: '100%'
           }}
         >
-          {!clubInput ? 'Add Club' : 'Edit Club'}
+          {!playerInput ? 'Add Player' : 'Edit Player'}
         </span>
       </DialogTitle>
       <DialogContent style={{ padding: 0}}>
@@ -151,7 +150,7 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
               fullWidth
               required
               id="name"
-              label="Club Name (full)"
+              label="Player Name"
               name="name"
               error={formErrors.name !== null}
               helperText={formErrors.name ? formErrors.name : ''}
@@ -192,17 +191,17 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
             <TextField
               fullWidth
               required
-              id="price"
-              label="Price per hour"
-              name="name"
-              error={formErrors.pricePerHour !== null}
-              helperText={formErrors.pricePerHour ? formErrors.pricePerHour : ''}
-              value={pricePerHour}
+              id="hand"
+              label="Hand"
+              name="hand"
+              error={formErrors.hand !== null}
+              helperText={formErrors.hand ? formErrors.hand : ''}
+              value={hand}
               onChange={(e) => {
-                setpricePerHour(+e.target.value);
+                setHand(e.target.value);
               }}
               InputLabelProps={{
-                style: { color: formErrors.pricePerHour !== null ? 'red' : '#12497F' }
+                style: { color: formErrors.hand !== null ? 'red' : '#12497F' }
               }}
               inputProps={{
                 style: { color: '#12497F' }
@@ -213,38 +212,17 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
             <TextField
               fullWidth
               required
-              id="number-of-courts"
-              label="Number of courts"
-              name="numberOfCourts"
-              error={formErrors.numberOfScourts !== null}
-              helperText={formErrors.numberOfScourts ? formErrors.numberOfScourts : ''}
-              value={numberOfCourts}
+              id="sex"
+              label="Sex"
+              name="sex"
+              error={formErrors.sex !== null}
+              helperText={formErrors.sex ? formErrors.sex : ''}
+              value={sex}
               onChange={(e) => {
-                setNumberOfCourts(+e.target.value);
+                setSex(e.target.value);
               }}
               InputLabelProps={{
-                style: { color: formErrors.numberOfScourts !== null ? 'red' : '#12497F' }
-              }}
-              inputProps={{
-                style: { color: '#12497F' }
-              }}
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-              fullWidth
-              required
-              id="surface"
-              label="Surface"
-              name="surface"
-              error={formErrors.surface !== null}
-              helperText={formErrors.surface ? formErrors.surface : ''}
-              value={surface}
-              onChange={(e) => {
-                setSurface(e.target.value);
-              }}
-              InputLabelProps={{
-                style: { color: formErrors.surface !== null ? 'red' : '#12497F' }
+                style: { color: formErrors.sex !== null ? 'red' : '#12497F' }
               }}
               inputProps={{
                 style: { color: '#12497F' }
@@ -275,21 +253,17 @@ export default function ClubForm({handleClose, clubInput} : IProps) {
             <Grid container style={{ marginTop: '115px', marginBottom: '40px' }}>
               <Grid item xs={12} style={{ textAlign: 'center'}}>
                 <Button
-                  id="cancel-new-company-button"
-                  data-testid="cancel-new-company-button"
-                //   className={classes.cancelButton}
+                  id="cancel-new-player-button"
                   onClick={handleClose}
                 >
                   Cancel
                 </Button>
                 <Button
-                  id="create-new-company-button"
-                  data-testid="create-new-company-button"
-                //   className={classes.createButton}
+                  id="create-new-player-button"
                   onClick={(e) => {
                     handleSubmit(e)}}
                 >
-                  {!clubInput ? 'CREATE' : 'UPDATE'}
+                  {!playerInput ? 'CREATE' : 'UPDATE'}
                 </Button>
               </Grid>
             </Grid>

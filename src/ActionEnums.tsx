@@ -8,5 +8,8 @@ export enum Actions {
     HideConfirmation = 'hide_confirmation',
     AddReservation = 'add_reservation',
     DeleteReservation = 'delete_reservation',
-    UpdateReservation = 'update_reservation'
-  }
+    UpdateReservation = 'update_reservation',
+    AddPlayer = 'add_player',
+    UpdatePlayer = 'update_player',
+    DeletePlayer = 'delete_player'
+}

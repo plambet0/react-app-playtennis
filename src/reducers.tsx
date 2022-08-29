@@ -1,12 +1,13 @@
 
 
 import { Actions } from './ActionEnums';
-import { IClub } from './components/clubs';
+import { IClub } from './components/clubs/clubList';
 import { v4 as uuid } from 'uuid';
 import { MessageType, ConfirmationType } from './context';
-import { IReservation } from './components/reservations';
+import { IReservation } from './components/reservations/reservationList';
+import { IPlayer } from './components/players/playerForm';
 export type ActionType =
-  ClubActions | MessageActions | ConfirmationActions | ReservationActions
+  ClubActions | MessageActions | ConfirmationActions | ReservationActions | PlayerActions
 
 type ActionMap<M extends { [index: string]: any }> = {
     [Key in keyof M]: M[Key] extends undefined
@@ -18,6 +19,27 @@ type ActionMap<M extends { [index: string]: any }> = {
           payload: M[Key];
         };
   };
+
+  type PlayerPayload = {
+    [Actions.AddPlayer]: {
+      name: string;
+      city: string;
+      hand: string;
+      sex: string;
+      image: string;
+    };
+    [Actions.DeletePlayer]: {
+      id: string;
+    }
+    [Actions.UpdatePlayer] : {
+        id: string ;
+        name: string;
+        city: string;
+        hand: string;
+        sex: string;
+        image: string;
+    };
+  }
 
   type ClubPayload = {
     [Actions.AddClub]: {
@@ -81,6 +103,7 @@ type ActionMap<M extends { [index: string]: any }> = {
   export type MessageActions = ActionMap<MessagePayload>[keyof ActionMap<MessagePayload>];
   export type ConfirmationActions = ActionMap<ConfirmationPayload>[keyof ActionMap<ConfirmationPayload>];
   export type ReservationActions = ActionMap<ReservationPayload>[keyof ActionMap<ReservationPayload>];
+  export type PlayerActions = ActionMap<PlayerPayload>[keyof ActionMap<PlayerPayload>];
 
   export const clubReducer = (state: IClub[], action: ActionType): IClub[] => {
     switch (action.type) {
@@ -102,6 +125,19 @@ type ActionMap<M extends { [index: string]: any }> = {
       case Actions.DeleteReservation:
         return state.filter((c) => c.id !== action.payload.id)
       case Actions.UpdateReservation:
+      return state.map((c) => c.id === action.payload.id ? action.payload : c)
+      default:
+        return state;
+    }
+  };
+
+  export const playerReducer = (state: IPlayer[], action: ActionType): IPlayer[] => {
+    switch (action.type) {
+      case Actions.AddPlayer:
+        return [{id: uuid(), ...action.payload}, ...state]
+      case Actions.DeletePlayer:
+        return state.filter((c) => c.id !== action.payload.id)
+      case Actions.UpdatePlayer:
       return state.map((c) => c.id === action.payload.id ? action.payload : c)
       default:
         return state;

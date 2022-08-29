@@ -1,14 +1,14 @@
 import { Dialog, DialogTitle, DialogContent, Button, TextField, Grid} from '@mui/material';
 import { useState, useContext } from 'react';
-import { IClub } from './clubs';
-import { Context } from '../context'
-import { Actions } from '../ActionEnums';
+import { IClub } from '../clubs/clubList';
+import { Context } from '../../context'
+import { Actions } from '../../ActionEnums';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { IReservation } from './reservations';
-import { Colors } from '../styles/theme';
+import { IReservation } from './reservationList';
+import { Colors } from '../../styles/theme';
 
 
 

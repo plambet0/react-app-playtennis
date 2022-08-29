@@ -9,10 +9,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../styles/theme';
 import { useState, useContext, useEffect } from 'react';
-import ClubForm from '../clubForm';
+import ClubForm from './clubForm'
 import { Context } from '../../context';
 import { Actions } from '../../ActionEnums';
-import ReservationForm from '../reservationForm';
+import ReservationForm from '../reservations/reservationForm';
 import { TextField } from '@mui/material';
 
 

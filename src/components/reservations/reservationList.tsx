@@ -3,10 +3,10 @@ import { DataGrid , GridColDef, GridValueGetterParams  } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@material-ui/core/styles';
-import { Context } from '../context';
-import { Colors } from '../styles/theme';
-import { Actions } from '../ActionEnums';
-import ReservationForm from '../components/reservationForm';
+import { Context } from '../../context';
+import { Colors } from '../../styles/theme';
+import { Actions } from '../../ActionEnums';
+import ReservationForm from './reservationForm';
 
 export type IReservation = {
     id: string ;
