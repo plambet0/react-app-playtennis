@@ -7,6 +7,7 @@ import Clubs from '../clubs/clubList';
 import { Banner } from './banner';
 import Reservations from '../reservations/reservationList';
 import PlayerForm from '../players/playerForm';
+import Players from '../players/playerList';
 
 
 export default function AppbarDesktop() {
