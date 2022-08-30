@@ -18,7 +18,7 @@ export default function Players() {
     useEffect(() => {
       if (state && state.players) {
         if (query.length > 0) {
-            setPlayers(state.players.filter((c) => c.name.toLowerCase().includes(query.toLowerCase())));
+            setPlayers(state.players.filter((p) => p.name.toLowerCase().includes(query.toLowerCase())));
         } else {
             setPlayers(state.players);
         }
@@ -43,7 +43,7 @@ export default function Players() {
     
     const  handleDelete = (player: IPlayer) => {
         dispatch({ type: Actions.HideConfirmation });
-        dispatch({type: Actions.DeleteClub, payload:{id:player.id}})
+        dispatch({type: Actions.DeletePlayer, payload:{id:player.id}})
         
     };
         
@@ -69,10 +69,6 @@ export default function Players() {
                     <CardMedia
                       component="img"
                       height='230'
-                      sx={{
-                        // 16:9
-                        pt: '56.25%',
-                      }}
                       image={player.image}
                       alt={player.name}
                     />
@@ -90,9 +86,9 @@ export default function Players() {
                         Sex: {player.sex}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button onClick={() => remove(player)} size="small" variant='contained' color='success' >Delete</Button>
-                      <Button onClick={() => handleEdit(player)} size="small" variant='contained' color='info'>Edit</Button>
+                    <CardActions style={{justifyContent: 'center', display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'}}>
+                      <Button sx={{ gridColumn: 'span 1' }}  onClick={() => remove(player)} size="small" variant='contained' color='success' >Delete</Button>
+                      <Button sx={{ gridColumn: 'span 1' }} onClick={() => handleEdit(player)} size="small" variant='contained' color='info'>Edit</Button>
                     </CardActions>
                   </Card>
                 </Grid>

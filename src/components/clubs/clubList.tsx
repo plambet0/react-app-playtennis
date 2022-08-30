@@ -94,14 +94,10 @@ export default function Clubs() {
                     <CardMedia
                       component="img"
                       height='230'
-                      sx={{
-                        // 16:9
-                        pt: '56.25%',
-                      }}
                       image={club.image}
                       alt={club.name}
                     />
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <CardContent sx={{ flexGrow: 1}}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {club.name}
                       </Typography>
@@ -118,10 +114,10 @@ export default function Clubs() {
                         Surface: {club.surface}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button onClick={() => remove(club)} size="small" variant='contained' color='success' >Delete</Button>
-                      <Button onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
-                      <Button onClick={() => handleReservation(club)} size="small" variant='contained' color='secondary'>Reserve</Button>
+                      <CardActions style={{justifyContent: 'center' , display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'}}>
+                      <Button sx={{ gridColumn: 'span 1' }} onClick={() => remove(club)} size="small" variant='contained' color='success' >Delete</Button>
+                      <Button sx={{ gridColumn: 'span 1' }} onClick={() => handleEdit(club)} size="small" variant='contained' color='info'>Edit</Button>
+                      <Button sx={{ gridColumn: 'span 1' }} onClick={() => handleReservation(club)} size="small" variant='contained' color='secondary'>Reserve</Button>
                     </CardActions>
                   </Card>
                 </Grid>
