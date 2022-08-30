@@ -44,7 +44,7 @@ export default function Clubs() {
           setClubs(state.clubs);
         }
       }
-    }, [query]);
+    }, [query, state]);
     
     
     const handleEdit = (club : IClub) => {

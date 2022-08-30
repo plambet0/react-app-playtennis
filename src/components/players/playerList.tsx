@@ -23,7 +23,7 @@ export default function Players() {
             setPlayers(state.players);
         }
       }
-    }, [query]);
+    }, [query, state]);
     
     
     const handleEdit = (player : IPlayer) => {
